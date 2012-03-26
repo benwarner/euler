@@ -86,19 +86,20 @@ def factorize(n, primes=[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]):
     i = 0
     n_original = copy.deepcopy(n)
     #print n_original
-    try:
-        while primes[i] <= math.sqrt(n_original) and n > 1:
-            if n % primes[i] == 0:
-                factors.append(primes[i])
-                #print 'primes[i] = %d' % primes[i]
-                #print 'n = %d' % n
-                n = n / primes[i]
-                #print 'n = %d' % n
-            else:
-                i += 1
-    except IndexError:
-        print "I'm sorry, but your list of primes is too short."
-        return []
+        while n > 1
+            i = 1
+            try:
+                while n % primes[i] != 0:
+                    i += 1 
+                        factors.append(primes[i])
+                        #print 'primes[i] = %d' % primes[i]
+                        #print 'n = %d' % n
+                        n = n / primes[i]
+                        #print 'n = %d' % n
+                else:
+                    i += 1
+            except IndexError:
+
     if n != 1:
         factors.append(primes[i])
     return factors
