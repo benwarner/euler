@@ -8,8 +8,8 @@ def permutation(items, n):
     
     try:
         items = list(items)
-    except TypeError:
-        return TypeError
+    except TypeError as err:
+        print err
 
     n = n % factorial(len(items))
     orderlist = []
