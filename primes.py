@@ -4,38 +4,6 @@ import copy
 #def phi(n):
 
 
-def list_divisors(n):
-    divisors = [] # Because n counts as a divisor.
-    for k in range(n / 2 + 1)[1:]:
-        if n % k == 0:
-            divisors.append(k)
-    divisors.append(n)
-
-    return divisors
-
-
-def tau(n):
-    """
-    Returns the number of divisors of n
-    """
-
-    factorlist = factorize(n)
-    factor = factorlist[0]
-    t = 1
-    i = 1
-    e = 2
-    while i <= len(factorlist) - 1:
-        if factor == factorlist[i]:
-            e += 1
-        else:
-            t *= e
-            e = 2
-            factor = factorlist[i]
-        i += 1
-    t *= e
-
-    return t
-
 
 def list_factors(n, primes=[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]):
     factors = recurfactorize(n, primes)
@@ -81,27 +49,25 @@ def factorize(n, primes=[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]):
     """
     
     if primes[-1] < math.sqrt(n):
-        primes = genprimelistse(math.sqrt(n))
-    factors = []
-    i = 0
-    n_original = copy.deepcopy(n)
-    #print n_original
-        while n > 1
-            i = 1
-            try:
-                while n % primes[i] != 0:
-                    i += 1 
-                        factors.append(primes[i])
-                        #print 'primes[i] = %d' % primes[i]
-                        #print 'n = %d' % n
-                        n = n / primes[i]
-                        #print 'n = %d' % n
-                else:
-                    i += 1
-            except IndexError:
+        primes = genprimelisttd(math.sqrt(n), primes)
 
-    if n != 1:
-        factors.append(primes[i])
+    factors = []
+    while n > 1:
+        i = 0
+        try:
+            while n % primes[i] != 0 and primes[i] <= math.sqrt(n):
+                i += 1 
+            if n % primes[i] == 0:
+                factors.append(primes[i])
+                n = n / primes[i]
+            else: # We must have reached the square root.
+                factors.append(n)
+                break
+        except IndexError as err:
+            # We came just below the square root (e.g. 1693 is prime and math.sqrt(1693 == 41.146)
+            factors.append(n)
+            break
+
     return factors
 
 def isprime(n):
@@ -126,10 +92,13 @@ def genprimelistflt(maxprime, primes = [2, 3]):
     return primes 
 
 
-def genprimelistse(maxprime, primes = [2, 3]):
+def genprimelisttd(maxprime, primes = [2, 3]):
     """
-    Generates a list of primes by the sieve of Eratosthenes.
+    Generates a list of primes by trial division.
     """
+    
+    if primes[0: 2] != [2, 3]: # Just a little data validation.
+        primes=[2, 3]
 
     n = primes[::-1][0] + 2
     while n <= maxprime:
