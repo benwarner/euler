@@ -1,3 +1,5 @@
+from primes import prime_powers
+
 def list_divisors(n):
     """
     Returns a list of divisors of n.
@@ -17,20 +19,10 @@ def tau(n):
     Returns the number of divisors of n
     """
 
-    factorlist = factorize(n)
-    factor = factorlist[0]
+    prime_power_list = prime_powers(n)
     t = 1
-    i = 1
-    e = 2
-    while i <= len(factorlist) - 1:
-        if factor == factorlist[i]:
-            e += 1
-        else:
-            t *= e
-            e = 2
-            factor = factorlist[i]
-        i += 1
-    t *= e
+    for e in prime_power_list:
+        t *= e[1] + 1
 
     return t
 

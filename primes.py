@@ -3,7 +3,29 @@ import copy
  
 #def phi(n):
 
+def prime_powers(n, primes=[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]):
+    """
+    Like the factorize method but returns a list of tuples
+    where the first entry is a prime and the second is the
+    number of occurances of that prime.
+    """
 
+    prime_list = factorize(n)
+    previous_prime = prime_list[0]
+    e = 1
+    prime_power_list = []
+    for p in prime_list[1:]:
+        if previous_prime == p:
+            e += 1
+        else:
+            prime_power_list.append((previous_prime, e))
+            previous_prime = p
+            e = 1
+    
+    prime_power_list.append((previous_prime, e))
+
+    return prime_power_list
+        
 
 def list_factors(n, primes=[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]):
     factors = recurfactorize(n, primes)
